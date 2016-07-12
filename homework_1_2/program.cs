@@ -8,7 +8,7 @@ using System;
 						
 			foreach (char symbol in str)
 			{
-				int dec = Convert.ToByte(symbol);
+				int dec = Convert.ToInt32(symbol);
 				string  hex = String.Format("{0:X}", dec);
 				Console.WriteLine("Char {0}: dec {1,3}, hex {2,3} ",symbol, dec, hex);
 			}
