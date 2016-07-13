@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Homework_1_2
+namespace homework_1_2
 {
     class Program
     {
         static void Main()
         {
-            string str = "hello world";
+            string str = "Hello world";
 
             foreach (char symbol in str)
             {

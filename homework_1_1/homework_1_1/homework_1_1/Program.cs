@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace homework_1_1
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.SetWindowSize(101, 15);
             Console.WriteLine("Type byte: default value {0}, min {1}, max {2}", default(byte), byte.MinValue, byte.MaxValue);
