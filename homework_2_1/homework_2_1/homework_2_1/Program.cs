@@ -16,7 +16,7 @@ namespace homework_2_1
   			System.String _sTwo = "World";
   			System.Boolean _bOne = false;
   			System.Boolean _bTwo = true;  			
-    	    Console.SetWindowSize(61,32);
+  			Console.SetWindowSize(61,32);
   			Console.WriteLine("Arithmetic operations with numbers 123 and 42:\n" +
   			                  "+: {0}\n" +
   			                  "-: {1}\n" +
