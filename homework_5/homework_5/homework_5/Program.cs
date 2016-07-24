@@ -36,10 +36,13 @@ namespace homework_5
         public Purchase[] GeneratePurchase(Product[] _argArray)
         {
             Purchase[] _purchaseArray = new Purchase[5];
-            Purchase _tempPurchase;
             for (int i = 0; i < _purchaseArray.Length; i++)
             {
-                _tempPurchase = new Purchase { Qwantity = 0, Name = _argArray[i].Name };
+                var _tempPurchase = new Purchase
+                {
+                    Qwantity = 0,
+                    Name = _argArray[i].Name
+                };
                 _purchaseArray[i] = _tempPurchase;
             }
             return _purchaseArray;
@@ -47,10 +50,12 @@ namespace homework_5
         public Product[] FillByProducts()
         {
             Product[] _productArray = new Product[5];
-            Product _tempProduct;
             for (int i = 0; i < _productArray.Length; i++)
             {
-                _tempProduct = new Product { Id = i + 1 };
+                var _tempProduct = new Product
+                {
+                    Id = i + 1
+                };
                 _productArray[i] = _tempProduct;
             }
             _productArray[0].Name = "Apple".PadRight(8);
