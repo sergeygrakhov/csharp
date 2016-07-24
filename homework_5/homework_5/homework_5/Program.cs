@@ -10,16 +10,12 @@ namespace homework_5
     {
         static void Main(string[] args)
         {
-            Boolean _flagExit = false;
-            ProductRepository _firstShop = ProductRepository.CreateRepository();
+            ProductRepository _firstShop = new ProductRepository();
             Product[] _firstShopProducts = _firstShop.FillByProducts();
             Purchase[] _firstPurchase = _firstShop.GeneratePurchase(_firstShopProducts);
             ProductRepository.HelloUser();
             ProductRepository.ShowPrices(_firstShopProducts);
-            while (!_flagExit)
-            {
-                _firstShop.SelectProduct(ref _flagExit, ref _firstPurchase, ref _firstShopProducts);
-            }
+            _firstShop.SelectProduct( ref _firstPurchase, ref _firstShopProducts);
         }
     }
     class Product
@@ -37,28 +33,25 @@ namespace homework_5
 
     class ProductRepository
     {
-        public static ProductRepository CreateRepository()
-        {
-            return new ProductRepository();
-        }
         public Purchase[] GeneratePurchase(Product[] _argArray)
         {
             Purchase[] _purchaseArray = new Purchase[5];
+            Purchase _tempPurchase;
             for (int i = 0; i < _purchaseArray.Length; i++)
             {
-                _purchaseArray[i] = new Purchase();
-                _purchaseArray[i].Qwantity = 0;
-                _purchaseArray[i].Name = _argArray[i].Name;
+                _tempPurchase = new Purchase { Qwantity = 0, Name = _argArray[i].Name };
+                _purchaseArray[i] = _tempPurchase;
             }
             return _purchaseArray;
         }
         public Product[] FillByProducts()
         {
             Product[] _productArray = new Product[5];
+            Product _tempProduct;
             for (int i = 0; i < _productArray.Length; i++)
             {
-                _productArray[i] = new Product();
-                _productArray[i].Id = i + 1;
+                _tempProduct = new Product { Id = i + 1 };
+                _productArray[i] = _tempProduct;
             }
             _productArray[0].Name = "Apple".PadRight(8);
             _productArray[0].Price = 33.30M;
@@ -142,7 +135,7 @@ namespace homework_5
                 Console.WriteLine("----------------------------");
             if(_decDiscount==1)
             {
-                Console.WriteLine("Total  payment: {0}\r\n", _decTotal * _decDiscount);
+                Console.WriteLine("Total  payment: {0:0.00}\r\n", _decTotal * _decDiscount);
             }
             else
             {
@@ -167,36 +160,40 @@ namespace homework_5
             }
             return _uintVal;
         }
-        public void SelectProduct(ref Boolean _booleanFlag, ref Purchase[] _argArray1, ref Product[] _argArray2)
+        public void SelectProduct(ref Purchase[] _argArray1, ref Product[] _argArray2)
         {
-            Console.Write("Select Id: ");
-            String _charSelect = Console.ReadLine();
-            switch (_charSelect)
+            Boolean _flagExit = false;
+            while(!_flagExit)
             {
-                case "1":
-                    _argArray1[0].Qwantity += ReadValue();
-                    break;
-                case "2":
-                    _argArray1[1].Qwantity += ReadValue();
-                    break;
-                case "3":
-                    _argArray1[2].Qwantity += ReadValue();
-                    break;
-                case "4":
-                    _argArray1[3].Qwantity += ReadValue();
-                    break;
-                case "5":
-                    _argArray1[4].Qwantity += ReadValue();
-                    break;
-                case "6":
-                    ShowPurchase(_argArray1, _argArray2);
-                    _booleanFlag = true;
-                    Console.WriteLine("Press any key to exit...");
-                    Console.ReadKey();
-                    break;
-                default:
-                    Console.Write("Error: Not valid id!!! Try again\r\n");
-                    break;
+                Console.Write("Select Id: ");
+                String _charSelect = Console.ReadLine();
+                switch (_charSelect)
+                {
+                    case "1":
+                        _argArray1[0].Qwantity += ReadValue();
+                        break;
+                    case "2":
+                        _argArray1[1].Qwantity += ReadValue();
+                        break;
+                    case "3":
+                        _argArray1[2].Qwantity += ReadValue();
+                        break;
+                    case "4":
+                        _argArray1[3].Qwantity += ReadValue();
+                        break;
+                    case "5":
+                        _argArray1[4].Qwantity += ReadValue();
+                        break;
+                    case "6":
+                        ShowPurchase(_argArray1, _argArray2);
+                        _flagExit = true;
+                        Console.WriteLine("Press any key to exit...");
+                        Console.ReadKey();
+                        break;
+                    default:
+                        Console.Write("Error: Not valid id!!! Try again\r\n");
+                        break;
+                }
             }
         }
     }
