@@ -161,7 +161,7 @@ namespace homework_5
             Console.Write("Enter qwantity of selected Product: ");
             while (UInt32.TryParse(Console.ReadLine(), out _uintVal) == false)
             {
-                Console.WriteLine("Not correct value...Please enter correct!..");
+                Console.Write("Not correct value...Please enter correct!..: ");
             }
             return _uintVal;
         }
