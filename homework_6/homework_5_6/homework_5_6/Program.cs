@@ -349,14 +349,28 @@ namespace homework_5_6
         }
         private static void Stats(List<Scout> _listArg)
         {
-            Console.Clear();
-            Console.WriteLine("Awards per scout:");
             Double _middleValue = default(Double);
+            Double _middleValueBoy = default(Double);
+            Double _middleValueGirl = default(Double);
             Double _middleValueCamp = default(Double);
             Double _maxValue = default(Double);
             Double _minValue = 100;
+            Double _maxValueBoy = default(Double);
+            Double _maxValueGirl = default(Double);
+            Int32 _maxSportBoy = default(Int32);
+            Int32 _minSportBoy = Int32.MaxValue; 
+            Int32 _maxSportGirl = default(Int32);
+            Int32 _minSportGirl = Int32.MaxValue;
             String _bestScout = default(String);
+            String _bestScoutBoy = default(String);
+            String _bestScoutGirl = default(String);
+            String _bestScoutBoySport = default(String);
+            String _bestScoutGirlSport = default(String);
+            String _worstestScoutBoySport = default(String);
+            String _worstestScoutGirlSport = default(String);
             String _worstestScout = default(String);
+            Console.Clear();
+            Console.WriteLine("Awards per scout:");
             for (int i = 0; i < _listArg.Count; i++)
             {
                 Console.Write("{0}. {1}: ",i+1,_listArg[i].Name);
@@ -379,15 +393,79 @@ namespace homework_5_6
                         _minValue = _middleValue;
                         _worstestScout = _listArg[i].Name;
                     }
+                    if(_listArg[i].Gender)
+                    {
+                        for (int j = 0; j < _listArg[i].RewardList.Count; j++)
+                        {
+                            _middleValueBoy += _listArg[i].RewardList[j].Value;
+                        }
+                        _middleValueBoy /= _listArg[i].RewardList.Count;
+                        if (_middleValueBoy > _maxValueBoy)
+                        {
+                            _maxValueBoy = _middleValueBoy;
+                            _bestScoutBoy = _listArg[i].Name;
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < _listArg[i].RewardList.Count; j++)
+                        {
+                            _middleValueGirl += _listArg[i].RewardList[j].Value;
+                        }
+                        _middleValueGirl /= _listArg[i].RewardList.Count;
+                        if (_middleValueGirl > _maxValueGirl)
+                        {
+                            _maxValueGirl = _middleValueGirl;
+                            _bestScoutGirl = _listArg[i].Name;
+                        }
+                    }
                 }
                 else
                 {
                     Console.WriteLine("No awards yet...");
                 }
+                foreach(Scout _tempScout in _listArg)
+                {
+                    if (_tempScout.Gender)
+                    {
+                        var _tempBoy = (BoyScout)_tempScout;
+                        if (_tempBoy.SportList.Count > _maxSportBoy)
+                        {
+                            _maxSportBoy = _tempBoy.SportList.Count;
+                            _bestScoutBoySport = _tempBoy.Name;
+                        }
+                        if (_tempBoy.SportList.Count < _minSportBoy)
+                        {
+                            _minSportBoy = _tempBoy.SportList.Count;
+                            _worstestScoutBoySport = _tempBoy.Name;
+                        }
+                    }
+                    else
+                    {
+                        var _tempGirl = (GirlScout)_tempScout;
+                        if (_tempGirl.SportList.Count > _maxSportGirl)
+                        {
+                            _maxSportGirl = _tempGirl.SportList.Count;
+                            _bestScoutGirlSport = _tempGirl.Name;
+                        }
+                        if (_tempGirl.SportList.Count < _minSportGirl)
+                        {
+                            _minSportGirl = _tempGirl.SportList.Count;
+                            _worstestScoutGirlSport = _tempGirl.Name;
+                        }
+                    }
+                }
             }
             Console.Write("Middle Award value in camp: {0}\r\n",_middleValueCamp/_listArg.Count);
             Console.WriteLine("Best scout in camp: {0}",_bestScout);
             Console.WriteLine("Worstest scout in camp: {0}", _worstestScout);
+            Console.WriteLine("Best boy scout in camp: {0}", _bestScoutBoy);
+            Console.WriteLine("Best girl scout in camp: {0}", _bestScoutGirl);
+
+            Console.WriteLine("Best boy scout in camp by sport: {0}", _bestScoutBoySport);
+            Console.WriteLine("Best girl scout in camp by sport: {0}", _bestScoutGirlSport);
+            Console.WriteLine("Worstest boy scout in camp by sport: {0}", _worstestScoutBoySport);
+            Console.WriteLine("Worstest girl scout in camp by sport: {0}", _worstestScoutGirlSport);
 
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
