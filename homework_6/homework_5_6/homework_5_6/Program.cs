@@ -434,7 +434,7 @@ namespace homework_5_6
                             _maxSportBoy = _tempBoy.SportList.Count;
                             _bestScoutBoySport = _tempBoy.Name;
                         }
-                        if (_tempBoy.SportList.Count < _minSportBoy)
+                        if (_tempBoy.SportList.Count < _minSportBoy && _tempBoy.SportList.Count!=0)
                         {
                             _minSportBoy = _tempBoy.SportList.Count;
                             _worstestScoutBoySport = _tempBoy.Name;
@@ -448,7 +448,7 @@ namespace homework_5_6
                             _maxSportGirl = _tempGirl.SportList.Count;
                             _bestScoutGirlSport = _tempGirl.Name;
                         }
-                        if (_tempGirl.SportList.Count < _minSportGirl)
+                        if (_tempGirl.SportList.Count < _minSportGirl && _tempGirl.SportList.Count != 0)
                         {
                             _minSportGirl = _tempGirl.SportList.Count;
                             _worstestScoutGirlSport = _tempGirl.Name;
