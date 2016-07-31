@@ -51,32 +51,32 @@ namespace homework_5_6
                     }
                     _tempScout.SportList.Add(_tempScout._sportPool[_indexSelect]);
                 }
-                else
-                {
+            else
+            {
                     var _tempScout = (GirlScout)_scoutArg;
-                for (int i = 0; i < _tempScout._sportPool.Length; i++)
-                {
-                    Console.WriteLine("{0}: {1}", i + 1, _tempScout._sportPool[i]);
-                }
-                while (!_flagCorrect)
-                {
+                    for (int i = 0; i < _tempScout._sportPool.Length; i++)
+                    {
+                        Console.WriteLine("{0}: {1}", i + 1, _tempScout._sportPool[i]);
+                    }
+                    while (!_flagCorrect)
+                    {
 
-                    while (UInt32.TryParse(Console.ReadLine(), out _indexSelect) == false)
-                    {
-                        Console.Write("Not correct symbols in selection...\r\nPlease enter correct!.. : ");
+                        while (UInt32.TryParse(Console.ReadLine(), out _indexSelect) == false)
+                        {
+                            Console.Write("Not correct symbols in selection...\r\nPlease enter correct!.. : ");
+                        }
+                        if (_indexSelect <= _tempScout._sportPool.Length && _indexSelect >= 1)
+                        {
+                            _indexSelect -= 1;
+                            _flagCorrect = true;
+                        }
+                        else
+                        {
+                            Console.Write("Please enter correct id (from 1 to {0}): ", _tempScout._sportPool.Length);
+                        }
                     }
-                    if (_indexSelect <= _tempScout._sportPool.Length && _indexSelect >= 1)
-                    {
-                        _indexSelect -= 1;
-                        _flagCorrect = true;
-                    }
-                    else
-                    {
-                        Console.Write("Please enter correct id (from 1 to {0}): ", _tempScout._sportPool.Length);
-                    }
+                    _tempScout.SportList.Add(_tempScout._sportPool[_indexSelect]);
                 }
-                _tempScout.SportList.Add(_tempScout._sportPool[_indexSelect]);
-            }
         }
         public static void RemoveSport(Scout _scoutArg)
         {
