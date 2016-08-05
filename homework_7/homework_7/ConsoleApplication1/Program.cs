@@ -213,7 +213,6 @@ namespace homework_7
                             while (Byte.TryParse(Console.ReadLine(), out _byteId) == false)
                             {
                                 Console.Write("Not correct symbols in ID!\r\nenter id: ");
-                                // Console.ReadKey();
                             }
                             if (_byteId > _employeeArg.Length)
                             {
@@ -237,8 +236,6 @@ namespace homework_7
                         Console.ReadLine();
                         break;
                 }
-
-
             }
         }
         //создадим гипотетический персонал 2 врача 1 психолог 5 обычных 3 охранника и по одному стажеру для всех должностей
