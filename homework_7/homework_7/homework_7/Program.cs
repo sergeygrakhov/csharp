@@ -16,14 +16,15 @@ namespace homework_7
     }
     abstract class Employee
     {
-        private String _stringName;
+        protected String _stringName;
         private Byte _byteExperience;
         public Decimal _decWorkedHoursThisMonth;
-        private Decimal _decimalSalaryPerHour;
-        private Decimal _decimalBonus;
-        private Decimal _decimalSalary;
+        protected Decimal _decimalSalaryPerHour;
+        protected Decimal _decimalBonus;
+        protected Decimal _decimalSalary;
         private String _stringJob;
         abstract public void Bonus();
+        abstract public void CalculateSalary();
         public Employee(String _stringArg, Byte _byteArg, Decimal _decimalArg, String _strinArgJob)
         {
             this._stringName = _stringArg;
@@ -53,138 +54,7 @@ namespace homework_7
             }
             this._decWorkedHoursThisMonth += _uintHours;
         }
-        public static void CalculateSalary(Employee _employeeArg)
-        {
-            if (_employeeArg is Doctor)
-            {
-                Decimal _decimalPerPatientBonus = 50;
-                Boolean _flagCorrect = false;
-                Byte _byteQwantityCured = default(Byte);
-                _employeeArg.Bonus();
-                _employeeArg.HowManyHoursWorked();
-                _employeeArg._decimalSalary = _employeeArg._decWorkedHoursThisMonth * _employeeArg._decimalSalaryPerHour;
-                while (!_flagCorrect)
-                {
-                    Console.Write("How many patients selected doctor has cured? : ");
-                    while (Byte.TryParse(Console.ReadLine(), out _byteQwantityCured) == false)
-                    {
-                        Console.Write("Not correct symbols in patients qwantity!\r\nHow many patients selected doctor has cured? : ");
-                    }
-                    if (_byteQwantityCured > 50)
-                    {
-                        Console.WriteLine("Too many patients !!! (no more than 50 human allowed )");
-                    }
-                    else
-                    {
-                        _flagCorrect = true;
-                    }
-                }
-                _employeeArg._decimalBonus = _decimalPerPatientBonus * _byteQwantityCured;
-                Console.WriteLine("Total payments for {0} are {1} dollars\r\n(Bonus for cure: {2}; Worked hours({3} dollars per hour): {4})",
-                    _employeeArg._stringName, _employeeArg._decimalSalary + _employeeArg._decimalBonus, _employeeArg._decimalBonus, _employeeArg._decimalSalaryPerHour, _employeeArg._decimalSalary);
-                Console.WriteLine("Any key to continue...");
-                Console.ReadKey();
-            }
-            else if (_employeeArg is Psycholog)
-            {
-                Decimal _decimalPerPatientBonus = 1.2M;
-                Boolean _flagCorrect = false;
-                Byte _byteQwantityPatients = default(Byte);
-                _employeeArg.Bonus();
-                _employeeArg.HowManyHoursWorked();
-                _employeeArg._decimalSalary = _employeeArg._decWorkedHoursThisMonth * _employeeArg._decimalSalaryPerHour;
-                while (!_flagCorrect)
-                {
-                    Console.Write("How many patients selected psycholog has? : ");
-                    while (Byte.TryParse(Console.ReadLine(), out _byteQwantityPatients) == false)
-                    {
-                        Console.Write("Not correct symbols in patients qwantity!\r\nHow many patients selected psycholog has? : ");
-                    }
-                    if (_byteQwantityPatients > 50)
-                    {
-                        Console.WriteLine("Too many patients !!! (no more than 50 human allowed )");
-                    }
-                    else
-                    {
-                        _flagCorrect = true;
-                    }
-                }
-                if (!(_byteQwantityPatients == 0))
-                {
-                    _employeeArg._decimalBonus = 1;
-                }
-                Decimal _tempValue = _employeeArg._decimalSalary;
-                for (int i = 0; i < _byteQwantityPatients; i++)
-                {
-                    _tempValue *= _decimalPerPatientBonus;
-                }
-                _employeeArg._decimalBonus = _tempValue;
-                Console.WriteLine("Total payments for {0} are {1} dollars\r\n(Bonus for patients: {2}; Worked hours({3} dollars per hour): {4})",
-                    _employeeArg._stringName, _employeeArg._decimalSalary + _employeeArg._decimalBonus, _employeeArg._decimalBonus, _employeeArg._decimalSalaryPerHour, _employeeArg._decimalSalary);
-                Console.WriteLine("Any key to continue...");
-                Console.ReadKey();
-            }
-            else if (_employeeArg is OrdinaryWorker)
-            {
-                Decimal _decimalPerOvertimeHour = 1.5M;
-                Boolean _flagCorrect = false;
-                Byte _byteQwantityOvertime = default(Byte);
-                _employeeArg.Bonus();
-                _employeeArg.HowManyHoursWorked();
-                _employeeArg._decimalSalary = _employeeArg._decWorkedHoursThisMonth * _employeeArg._decimalSalaryPerHour;
-                while (!_flagCorrect)
-                {
-                    Console.Write("How many hours overtime selected worker has? : ");
-                    while (Byte.TryParse(Console.ReadLine(), out _byteQwantityOvertime) == false)
-                    {
-                        Console.Write("Not correct symbols in patients qwantity!\r\nHow many patients selected psycholog has? : ");
-                    }
-                    if (_byteQwantityOvertime > _employeeArg._decWorkedHoursThisMonth / 2)
-                    {
-                        Console.WriteLine("Too many overtime !!! (no more than {0} hours allowed )", _employeeArg._decWorkedHoursThisMonth / 2);
-                    }
-                    else
-                    {
-                        _flagCorrect = true;
-                    }
-                }
-                _employeeArg._decimalBonus = _byteQwantityOvertime * _employeeArg._decimalSalaryPerHour * _decimalPerOvertimeHour;
-                Console.WriteLine("Total payments for {0} are {1} dollars\r\n(Bonus for overtime: {2}; Worked hours({3} dollars per hour): {4})",
-                    _employeeArg._stringName, _employeeArg._decimalSalary + _employeeArg._decimalBonus, _employeeArg._decimalBonus, _employeeArg._decimalSalaryPerHour, _employeeArg._decimalSalary);
-                Console.WriteLine("Any key to continue...");
-                Console.ReadKey();
-            }
-            else if (_employeeArg is Security)
-            {
-                Byte _bytePerNightHourRate = 2;
-                Boolean _flagCorrect = false;
-                Byte _byteQwantityNightime = default(Byte);
-                _employeeArg.Bonus();
-                _employeeArg.HowManyHoursWorked();
-                _employeeArg._decimalSalary = _employeeArg._decWorkedHoursThisMonth * _employeeArg._decimalSalaryPerHour;
-                while (!_flagCorrect)
-                {
-                    Console.Write("How many night hours overtime selected security has? : ");
-                    while (Byte.TryParse(Console.ReadLine(), out _byteQwantityNightime) == false)
-                    {
-                        Console.Write("Not correct symbols in patients qwantity!\r\nHow many patients selected psycholog has? : ");
-                    }
-                    if (_byteQwantityNightime > _employeeArg._decWorkedHoursThisMonth / 2)
-                    {
-                        Console.WriteLine("Too many night hours !!! (no more than {0} hours allowed )", _employeeArg._decWorkedHoursThisMonth / 2);
-                    }
-                    else
-                    {
-                        _flagCorrect = true;
-                    }
-                }
-                _employeeArg._decimalBonus = _byteQwantityNightime * _employeeArg._decimalSalaryPerHour * _bytePerNightHourRate;
-                Console.WriteLine("Total payments for {0} are {1} dollars\r\n(Bonus for nigthtime: {2}; Worked hours({3} dollars per hour): {4})",
-                    _employeeArg._stringName, _employeeArg._decimalSalary + _employeeArg._decimalBonus, _employeeArg._decimalBonus, _employeeArg._decimalSalaryPerHour, _employeeArg._decimalSalary);
-                Console.WriteLine("Any key to continue...");
-                Console.ReadKey();
-            }
-        }
+        
         public static void Start(Employee[] _employeeArg)
         {
             Byte _byteId = default(Byte);
@@ -226,7 +96,8 @@ namespace homework_7
 
                         }
                         _byteId -= 1;
-                        Employee.CalculateSalary(_employeeArg[_byteId]);
+                        _employeeArg[_byteId].Bonus();
+                        _employeeArg[_byteId].CalculateSalary();
                         break;
                     case "E":
                         _flagExit = true;
@@ -264,6 +135,35 @@ namespace homework_7
     {
         public Doctor(String _stringArg, Byte _byteArg, Decimal _decimalArg, String _strinArgJob)
         : base(_stringArg, _byteArg, _decimalArg, _strinArgJob) { }
+        public override void CalculateSalary()
+        {
+            Decimal _decimalPerPatientBonus = 50;
+            Boolean _flagCorrect = false;
+            Byte _byteQwantityCured = default(Byte);
+            this.HowManyHoursWorked();
+            this._decimalSalary = this._decWorkedHoursThisMonth * this._decimalSalaryPerHour;
+            while (!_flagCorrect)
+            {
+                Console.Write("How many patients selected doctor has cured? : ");
+                while (Byte.TryParse(Console.ReadLine(), out _byteQwantityCured) == false)
+                {
+                    Console.Write("Not correct symbols in patients qwantity!\r\nHow many patients selected doctor has cured? : ");
+                }
+                if (_byteQwantityCured > 50)
+                {
+                    Console.WriteLine("Too many patients !!! (no more than 50 human allowed )");
+                }
+                else
+                {
+                    _flagCorrect = true;
+                }
+            }
+            this._decimalBonus = _decimalPerPatientBonus * _byteQwantityCured;
+            Console.WriteLine("Total payments for {0} are {1} dollars\r\n(Bonus for cure: {2}; Worked hours({3} dollars per hour): {4})",
+                this._stringName, this._decimalSalary + this._decimalBonus, this._decimalBonus, this._decimalSalaryPerHour, this._decimalSalary);
+            Console.WriteLine("Any key to continue...");
+            Console.ReadKey();
+        }
         public override void Bonus()
         {
             Byte _bonusHours = default(Byte);
@@ -281,6 +181,44 @@ namespace homework_7
     {
         public Psycholog(String _stringArg, Byte _byteArg, Decimal _decimalArg, String _strinArgJob)
         : base(_stringArg, _byteArg, _decimalArg, _strinArgJob) { }
+        public override void CalculateSalary()
+        {
+            Decimal _decimalPerPatientBonus = 1.2M;
+            Boolean _flagCorrect = false;
+            Byte _byteQwantityPatients = default(Byte);
+            this.HowManyHoursWorked();
+            this._decimalSalary = this._decWorkedHoursThisMonth * this._decimalSalaryPerHour;
+            while (!_flagCorrect)
+            {
+                Console.Write("How many patients selected psycholog has? : ");
+                while (Byte.TryParse(Console.ReadLine(), out _byteQwantityPatients) == false)
+                {
+                    Console.Write("Not correct symbols in patients qwantity!\r\nHow many patients selected psycholog has? : ");
+                }
+                if (_byteQwantityPatients > 50)
+                {
+                    Console.WriteLine("Too many patients !!! (no more than 50 human allowed )");
+                }
+                else
+                {
+                    _flagCorrect = true;
+                }
+            }
+            if (!(_byteQwantityPatients == 0))
+            {
+                this._decimalBonus = 1;
+            }
+            Decimal _tempValue = this._decimalSalary;
+            for (int i = 0; i < _byteQwantityPatients; i++)
+            {
+                _tempValue *= _decimalPerPatientBonus;
+            }
+            this._decimalBonus = _tempValue;
+            Console.WriteLine("Total payments for {0} are {1} dollars\r\n(Bonus for patients: {2}; Worked hours({3} dollars per hour): {4})",
+                this._stringName, this._decimalSalary + this._decimalBonus, this._decimalBonus, this._decimalSalaryPerHour, this._decimalSalary);
+            Console.WriteLine("Any key to continue...");
+            Console.ReadKey();
+        }
         public override void Bonus()
         {
             Byte _bonusHours = default(Byte);
@@ -298,6 +236,35 @@ namespace homework_7
     {
         public OrdinaryWorker(String _stringArg, Byte _byteArg, Decimal _decimalArg, String _strinArgJob)
         : base(_stringArg, _byteArg, _decimalArg, _strinArgJob) { }
+        public override void CalculateSalary()
+        {
+            Decimal _decimalPerOvertimeHour = 1.5M;
+            Boolean _flagCorrect = false;
+            Byte _byteQwantityOvertime = default(Byte);
+            this.HowManyHoursWorked();
+            this._decimalSalary = this._decWorkedHoursThisMonth * this._decimalSalaryPerHour;
+            while (!_flagCorrect)
+            {
+                Console.Write("How many hours overtime selected worker has? : ");
+                while (Byte.TryParse(Console.ReadLine(), out _byteQwantityOvertime) == false)
+                {
+                    Console.Write("Not correct symbols in patients qwantity!\r\nHow many patients selected psycholog has? : ");
+                }
+                if (_byteQwantityOvertime > this._decWorkedHoursThisMonth / 2)
+                {
+                    Console.WriteLine("Too many overtime !!! (no more than {0} hours allowed )", this._decWorkedHoursThisMonth / 2);
+                }
+                else
+                {
+                    _flagCorrect = true;
+                }
+            }
+            this._decimalBonus = _byteQwantityOvertime * this._decimalSalaryPerHour * _decimalPerOvertimeHour;
+            Console.WriteLine("Total payments for {0} are {1} dollars\r\n(Bonus for overtime: {2}; Worked hours({3} dollars per hour): {4})",
+                this._stringName, this._decimalSalary + this._decimalBonus, this._decimalBonus, this._decimalSalaryPerHour, this._decimalSalary);
+            Console.WriteLine("Any key to continue...");
+            Console.ReadKey();
+        }
         public override void Bonus()
         {
             Byte _bonusHours = default(Byte);
@@ -314,6 +281,35 @@ namespace homework_7
     {
         public Security(String _stringArg, Byte _byteArg, Decimal _decimalArg, String _strinArgJob)
         : base(_stringArg, _byteArg, _decimalArg, _strinArgJob) { }
+        public override void CalculateSalary()
+        {
+            Byte _bytePerNightHourRate = 2;
+            Boolean _flagCorrect = false;
+            Byte _byteQwantityNightime = default(Byte);
+            this.HowManyHoursWorked();
+            this._decimalSalary = this._decWorkedHoursThisMonth * this._decimalSalaryPerHour;
+            while (!_flagCorrect)
+            {
+                Console.Write("How many night hours overtime selected security has? : ");
+                while (Byte.TryParse(Console.ReadLine(), out _byteQwantityNightime) == false)
+                {
+                    Console.Write("Not correct symbols in patients qwantity!\r\nHow many patients selected psycholog has? : ");
+                }
+                if (_byteQwantityNightime > this._decWorkedHoursThisMonth / 2)
+                {
+                    Console.WriteLine("Too many night hours !!! (no more than {0} hours allowed )", this._decWorkedHoursThisMonth / 2);
+                }
+                else
+                {
+                    _flagCorrect = true;
+                }
+            }
+            this._decimalBonus = _byteQwantityNightime * this._decimalSalaryPerHour * _bytePerNightHourRate;
+            Console.WriteLine("Total payments for {0} are {1} dollars\r\n(Bonus for nigthtime: {2}; Worked hours({3} dollars per hour): {4})",
+                this._stringName, this._decimalSalary + this._decimalBonus, this._decimalBonus, this._decimalSalaryPerHour, this._decimalSalary);
+            Console.WriteLine("Any key to continue...");
+            Console.ReadKey();
+        }
         public override void Bonus()
         {
             Byte _bonusHours = default(Byte);
