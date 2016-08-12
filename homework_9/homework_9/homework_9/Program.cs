@@ -100,6 +100,7 @@ namespace homework_9
     }
     class RussianBot : SimpleChatBot
     {
+        private String _botName = "Иван";
         private String[] _howAreYouQuestion = new String[] { "как дела?", "как твои дела?", "как сам?", "как настроение?" };
         private String[] _whatIsTheWeather = new String[] { "как погодка?", "какая погода?", "как тебе погода?", "что там с погодой?" };
         private String[] _goodByeSentence = new String[] { "пока", "до свидания", "прощай", "до новых встреч" };
@@ -154,7 +155,7 @@ namespace homework_9
         }
         protected override void SayHello()
         {
-            Console.WriteLine("Привет!");
+            Console.WriteLine("Привет! Меня зовут {0}", this._botName);
         }
         protected override void SayNotUnderstand()
         {
@@ -177,6 +178,7 @@ namespace homework_9
     }
     class UkrainianBot : SimpleChatBot
     {
+        private String _botName = "Петро";
         private String[] _howAreYouQuestion = new String[] { "як справи?", "як діла?", "як себе почуваєте?" };
         private String[] _whatIsTheWeather = new String[] { "яка погода?", "як погодка?", "як тобі погода?", "що там з погодою?" };
         private String[] _goodByeSentence = new String[] { "до зустрічі", "до побачення", "прощавайте", "до нових зустрічей" };
@@ -232,7 +234,7 @@ namespace homework_9
 
         protected override void SayHello()
         {
-            Console.WriteLine("Привіт!");
+            Console.WriteLine("Привіт! Мене звати {0}",this._botName);
         }
         protected override void SayNotUnderstand()
         {
@@ -255,6 +257,7 @@ namespace homework_9
     }
     class EnglishBot : SimpleChatBot
     {
+        private String _botName = "John";
         private String[] _howAreYouQuestion = new String[] { "how are you?", "how are you doing?" };
         private String[] _whatIsTheWeather = new String[] { "how is the weather?", "what is the weather?", "what do you think of the weather?", "what is up with the weather?" };
         private String[] _goodByeSentence = new String[] { "good bye", "see you later", "bye bye" };
@@ -309,7 +312,7 @@ namespace homework_9
         }
         protected override void SayHello()
         {
-            Console.WriteLine("Hi!");
+            Console.WriteLine("Hi! My name is {0}", this._botName);
         }
         protected override void SayNotUnderstand()
         {
