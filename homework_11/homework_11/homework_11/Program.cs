@@ -12,11 +12,10 @@ namespace homework_11
         delegate void StringOrNumber(Value _valueArg);
         public static void Main(string[] args)
         {
-
             Value myValue = Value.CreateValue();
             StringOrNumber Operation = _valueArg =>
             {
-                Decimal _temp = default(Decimal);
+                Decimal _temp; 
                 if (Decimal.TryParse(_valueArg.MyValue, out _temp))
                 {
                     _temp *= _temp;
@@ -59,19 +58,25 @@ namespace homework_11
         public static void ChooseDestination(this Value _valueArg)
         {
             String _chooseStr = null;
-            Console.WriteLine("Chose destination\r\n1:File in current folder\r\n2:Print in Console");
-            _chooseStr = Console.ReadLine();
-            switch (_chooseStr)
+            Boolean _flagExit = false;
+            while(!_flagExit)
             {
-                case "1":
-                    Value.WriteStringToFile(_valueArg.MyValue);
-                    break;
-                case "2":
-                    Console.WriteLine(_valueArg.MyValue);
-                    break;
-                default:
-                    Console.WriteLine("Not correct selection...");
-                    break;
+                Console.WriteLine("Choose destination\r\n1:File in current folder\r\n2:Print in Console");
+                _chooseStr = Console.ReadLine();
+                switch (_chooseStr)
+                {
+                    case "1":
+                        Value.WriteStringToFile(_valueArg.MyValue);
+                        _flagExit = true;
+                        break;
+                    case "2":
+                        Console.WriteLine(_valueArg.MyValue);
+                        _flagExit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Not correct selection...");
+                        break;
+                }
             }
         }
     }
