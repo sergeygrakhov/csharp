@@ -34,7 +34,6 @@ namespace homework_11
     }
     class Value
     {
-
         public String MyValue { get; set; }
         private Value() { }
         public static Value CreateValue()
