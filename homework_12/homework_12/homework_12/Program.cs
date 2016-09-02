@@ -10,21 +10,19 @@ namespace homework_12
     {
         static void Main(string[] args)
         {
-            StudentRepository _school = new StudentRepository();
-            //for (int i = 0; i < _students.Students.Count; i++)
-            //{
 
-            //}
-            foreach (var item in _school.Students)
+            StudentRepository _school = new StudentRepository();
+
+            _school.AddStudent();
+            _school.Students[7].AddSubject();
+            foreach (Student student in _school.Students)
             {
-                Console.WriteLine(item.Name + " ");
-                foreach (var item2 in item.SubjectRatings.Subjects)
-                {
-                    Console.Write(item2.Name + " ");
-                    Console.Write(item2.Rating);
-                }
-                //Console.WriteLine(item.SubjectRatings.Subjects[1].);
+                student.GetMediumRating();
             }
+            //_school.GetMedium();
+            _school.ShowAllStudents();
+
+
             Console.ReadKey();
         }
     }
