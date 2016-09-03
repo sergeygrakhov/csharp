@@ -49,7 +49,6 @@ namespace homework_12
                     Console.WriteLine("This subject exist");
                 }
             }
-            
             while (!_flagCorrect)
             {
                 Console.Write("Enter rate for entered subject:");

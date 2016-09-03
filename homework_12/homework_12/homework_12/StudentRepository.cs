@@ -210,7 +210,7 @@ namespace homework_12
                             {
                                 if (student.Age > _Age)
                                 {
-                                    Console.Write("Name {0} :", student.Name);
+                                    Console.Write("{0} : ", student.Name);
                                     student.GetMediumRating();
                                 }
                             }
