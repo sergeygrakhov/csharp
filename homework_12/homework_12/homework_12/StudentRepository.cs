@@ -14,7 +14,6 @@ namespace homework_12
         private static String _serializationFile = Path.Combine(_path, "homework_12.bin");
         private List<Student> CreateSchoolClass()
         {
-
             Students = new List<Student>
             {
                 new Student() { Name = "Peter", Age = 10,Ratings = new Dictionary<String,Int32>
@@ -163,7 +162,7 @@ namespace homework_12
                         }
                         else
                         {
-                            Console.WriteLine("There is no students...Create defalt class, add or load from file");
+                            Console.WriteLine("There is no students...Create default class, add or load from file");
                             Console.WriteLine("Enter to continue");
                             Console.ReadLine();
                         }
@@ -181,7 +180,7 @@ namespace homework_12
                         }
                         else
                         {
-                            Console.WriteLine("There is no students...Create defalt class, add or load from file");
+                            Console.WriteLine("There is no students...Create default class, add or load from file");
                             Console.WriteLine("Enter to continue");
                             Console.ReadLine();
                         }
@@ -220,7 +219,7 @@ namespace homework_12
                         }
                         else
                         {
-                            Console.WriteLine("There is no students...Create defalt class, add or load from file");
+                            Console.WriteLine("There is no students...Create default class, add or load from file");
                             Console.WriteLine("Enter to continue");
                             Console.ReadLine();
                         }
@@ -319,7 +318,7 @@ namespace homework_12
                         }
                         else
                         {
-                            Console.WriteLine("There is no students...Create defalt class, add or load from file");
+                            Console.WriteLine("There is no students...Create default class, add or load from file");
                             Console.WriteLine("Enter to continue");
                             Console.ReadLine();
                         }
@@ -353,7 +352,7 @@ namespace homework_12
                         }
                         else
                         {
-                            Console.WriteLine("There is no students...Create defalt class, add or load from file");
+                            Console.WriteLine("There is no students...Create default class, add or load from file");
                             Console.WriteLine("Enter to continue");
                             Console.ReadLine();
                         }
@@ -401,7 +400,7 @@ namespace homework_12
                 }
                 else
                 {
-                    Console.WriteLine("There is no students...Create defalt class, add or load from file");
+                    Console.WriteLine("There is no students...Create default class, add or load from file");
                     Console.WriteLine("Enter to continue");
                     Console.ReadLine();
                 }
