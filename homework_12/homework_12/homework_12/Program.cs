@@ -10,20 +10,8 @@ namespace homework_12
     {
         static void Main(string[] args)
         {
-
             StudentRepository _school = new StudentRepository();
-
-            _school.AddStudent();
-            _school.Students[7].AddSubject();
-            foreach (Student student in _school.Students)
-            {
-                student.GetMediumRating();
-            }
-            //_school.GetMedium();
-            _school.ShowAllStudents();
-
-
-            Console.ReadKey();
+            _school.ShowMenu();
         }
     }
 }

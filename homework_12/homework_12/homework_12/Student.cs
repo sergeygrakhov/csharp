@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace homework_12
 {
+    [Serializable]
     class Student
     {
         public String Name { get; set; }
@@ -67,7 +67,6 @@ namespace homework_12
                 }
             }
             Ratings[_SubjectName] = _iRate;
-
         }
     }
 }
