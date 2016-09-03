@@ -264,50 +264,58 @@ namespace homework_12
                             String[] _arrSub = new string[Students[_index - 1].Ratings.Keys.Count];
                             while (!_flagCorrectSubject)
                             {
-                                
-                                Console.WriteLine("Enter id of subject to rate:");
+                                if (Students[_index - 1].Ratings.Keys.Count>0)
+                                {
+                                    Console.WriteLine("Enter id of subject to rate:");
 
-                                foreach (String item in Students[_index - 1].Ratings.Keys)
-                                {
-                                    _arrSub[_counter] = item;
-                                    Console.WriteLine("{0}: {1}", _counter + 1, item);
-                                    _counter++;
-                                }
-                                while(Int32.TryParse(Console.ReadLine(), out _selectedSubject) == false)
-                                {
-                                    Console.WriteLine("Not correct!!");
-                                }
-                                if (_selectedSubject<1 || _selectedSubject>_arrSub.Length)
-                                {
-                                    Console.WriteLine("Not in range!!");
+                                    foreach (String item in Students[_index - 1].Ratings.Keys)
+                                    {
+                                        _arrSub[_counter] = item;
+                                        Console.WriteLine("{0}: {1}", _counter + 1, item);
+                                        _counter++;
+                                    }
+                                    while (Int32.TryParse(Console.ReadLine(), out _selectedSubject) == false)
+                                    {
+                                        Console.WriteLine("Not correct!!");
+                                    }
+                                    if (_selectedSubject < 1 || _selectedSubject > _arrSub.Length)
+                                    {
+                                        Console.WriteLine("Not in range!!");
+                                    }
+                                    else
+                                    {
+                                        _flagCorrectSubject = true;
+                                    }
+                                    Boolean _flagCorrectAdd = false;
+                                    Int32 _iRate = 0;
+                                    while (!_flagCorrectAdd)
+                                    {
+                                        Console.Write("Enter rate for entered subject:");
+                                        while (Int32.TryParse(Console.ReadLine(), out _iRate) == false)
+                                        {
+                                            Console.Write("Not correct symbols in input...\r\n");
+                                        }
+                                        if ((_iRate > 12) || (_iRate < 1))
+                                        {
+                                            Console.WriteLine("Not correct !!! (from 1 to 12)");
+                                        }
+                                        else
+                                        {
+                                            _flagCorrectAdd = true;
+                                        }
+                                    }
+                                    Students[_index - 1].Ratings[_arrSub[_selectedSubject - 1]] = _iRate;
+                                    Console.WriteLine("Enter to continue");
+                                    Console.ReadLine();
                                 }
                                 else
                                 {
                                     _flagCorrectSubject = true;
+                                    Console.WriteLine("Selected student do not have subjects, add first!");
+                                    Console.WriteLine("Enter to continue");
+                                    Console.ReadLine();
                                 }
                             }
-                            Boolean _flagCorrectAdd = false;
-                            Int32 _iRate = 0;
-                            while (!_flagCorrectAdd)
-                            {
-                                Console.Write("Enter rate for entered subject:");
-                                while (Int32.TryParse(Console.ReadLine(), out _iRate) == false)
-                                {
-                                    Console.Write("Not correct symbols in input...\r\n");
-                                }
-                                if ((_iRate > 12) || (_iRate < 1))
-                                {
-                                    Console.WriteLine("Not correct !!! (from 1 to 12)");
-                                }
-                                else
-                                {
-                                    _flagCorrectAdd = true;
-                                }
-                            }
-
-                            Students[_index - 1].Ratings[_arrSub[_selectedSubject-1]] = _iRate;
-                            Console.WriteLine("Enter to continue");
-                            Console.ReadLine();
                         }
                         else
                         {
