@@ -30,7 +30,7 @@ namespace homework_12
         }
         public IEnumerable<Int32[]> GetRatings()
         {
-            yield return Ratings.Values.ToArray();
+            yield return this.Ratings.Values.ToArray();
         }
         public void GetMediumRating()
         {

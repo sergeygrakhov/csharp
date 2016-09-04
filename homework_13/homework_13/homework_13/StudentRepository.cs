@@ -460,15 +460,15 @@ namespace homework_12
         {
             using (Stream stream = File.Open(_serializationFile, FileMode.Open))
             {
-                this.Students = new List<Student>();
-                foreach (Student student in Students)
-                {
-                    student.ArrayToRatings();
-                }
                 if (stream.Length != 0)
                 {
                     var serializer = new XmlSerializer(typeof(List<Student>));
                     this.Students = (List<Student>)serializer.Deserialize(stream);
+                    foreach (Student student in this)
+                    {
+                        student.Ratings = new Dictionary<string, int>();
+                        student.ArrayToRatings();
+                    }
                     stream.Close();
                     Console.WriteLine("Data sucsesfully loaded");
                     Console.WriteLine("Enter to continue");
