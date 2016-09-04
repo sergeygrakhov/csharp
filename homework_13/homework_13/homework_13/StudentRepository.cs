@@ -18,7 +18,7 @@ namespace homework_12
         public List<Student> Students { get; set; }
         Int32 position = -1;
         private static String _path = Directory.GetCurrentDirectory();
-        private static String _serializationFile = Path.Combine(_path, "homework_12.xml");
+        private static String _serializationFile = Path.Combine(_path, "homework_13.xml");
         public Student this[Int32 index]
         {
             get
