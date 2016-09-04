@@ -1,17 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace homework_12
 {
-    [Serializable]
-    class Student
+    public class Student
     {
+        public Student() { }
         public String Name { get; set; }
         public Int32 Age { get; set; }
+        public String[] RatingsArrayString { get; set; }
+        public Int32[] RatingsArrayInt { get; set; }
+        [XmlIgnore()]
         public Dictionary<String, Int32> Ratings { get; set; }
+        public void RatingDicToArray()
+        {
+            this.RatingsArrayString = Ratings.Keys.ToArray();
+            this.RatingsArrayInt = Ratings.Values.ToArray();
+        }
+        public void ArrayToRatings()
+        {
+            for (int i = 0; i < RatingsArrayString.Length; i++)
+            {
+                Ratings[RatingsArrayString[i]] = RatingsArrayInt[i];
+            }
+        }
         public IEnumerable<Int32[]> GetRatings()
         {
             yield return Ratings.Values.ToArray();

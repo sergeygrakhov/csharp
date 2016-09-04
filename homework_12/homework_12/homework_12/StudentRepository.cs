@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 using System.Threading.Tasks;
 
 namespace homework_12
 {
-    class StudentRepository
+    [Serializable]
+    [XmlRoot("StudentRepository")]
+    public class StudentRepository
     {
+        public StudentRepository() { }
+        [XmlArray("Students"), XmlArrayItem(typeof(Student), ElementName = "Student")]
         public List<Student> Students { get; set; }
         private static String _path = Directory.GetCurrentDirectory();
-        private static String _serializationFile = Path.Combine(_path, "homework_12.bin");
-        private List<Student> CreateSchoolClass()
+        private static String _serializationFile = Path.Combine(_path, "homework_12.xml");
+        public List<Student> CreateSchoolClass()
         {
             Students = new List<Student>
             {
@@ -390,12 +396,17 @@ namespace homework_12
         {
             using (Stream stream = File.Open(_serializationFile, FileMode.Create))
             {
-                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                foreach (Student student in Students)
+                {
+                    student.RatingDicToArray();
+                }
+                var serializer = new XmlSerializer(typeof(List<Student>));
                 if (this.Students!=null)
                 {
-                    bformatter.Serialize(stream, this.Students);
+                    serializer.Serialize(stream, this.Students);
                     Console.WriteLine("Saved to filesystem...");
                     Console.WriteLine("Enter to continue");
+                    stream.Close();
                     Console.ReadLine();
                 }
                 else
@@ -410,10 +421,16 @@ namespace homework_12
         {
             using (Stream stream = File.Open(_serializationFile, FileMode.Open))
             {
+                this.Students = new List<Student>();
+                foreach (Student student in Students)
+                {
+                    student.ArrayToRatings();
+                }
                 if (stream.Length!=0)
                 {
-                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    this.Students = (List<Student>)bformatter.Deserialize(stream);
+                    var serializer = new XmlSerializer(typeof(List<Student>));
+                    this.Students = (List<Student>)serializer.Deserialize(stream);
+                    stream.Close();
                     Console.WriteLine("Data sucsesfully loaded");
                     Console.WriteLine("Enter to continue");
                     Console.ReadLine();
