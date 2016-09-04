@@ -388,6 +388,8 @@ namespace homework_12
                         break;
                     default:
                         Console.WriteLine("Wrong selection!!!");
+                        Console.WriteLine("Enter to continue");
+                        Console.ReadLine();
                         break;
                 }
             }
