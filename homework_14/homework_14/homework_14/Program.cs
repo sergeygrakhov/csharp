@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace homework_14
 {
-    class Program
+    namespace homework_14
     {
-        static void Main(string[] args)
+        class Program
         {
-            ProductRepository _purchases = new ProductRepository();
-            _purchases.CreatePurchaseBase();
-            _purchases.FirstTaskMethod();
-                Console.ReadLine();
+            static void Main(string[] args)
+            {
+                ProductRepository _purchases = new ProductRepository();
+                _purchases.CreatePurchaseBase();
+                _purchases.Start();
             }
         }
     }
+}
 
-    
+
 

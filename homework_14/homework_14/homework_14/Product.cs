@@ -14,6 +14,5 @@ namespace homework_14
         public Int32 Qwantity { get; set; }
         public Decimal Discount { get; set; }
         public Decimal PurchaseSum { get; set; }
-
     }
 }
