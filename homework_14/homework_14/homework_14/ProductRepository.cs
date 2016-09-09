@@ -67,6 +67,7 @@ namespace homework_14
         {
             Int32 _basePages = default(Int32);
             Int32 _pageNumber = default(Int32);
+            Boolean _flagMainMenu = false;
             Boolean _lastPage = false;
             if (this.PurchaseBase.Count % 2 != 0)
             {
@@ -78,60 +79,60 @@ namespace homework_14
                 _basePages = this.PurchaseBase.Count / 2;
             }
             Console.Clear();
-            while (true)
+            while (!_flagMainMenu)
             {
                 Boolean _correct = false;
-                Console.Clear();
-                Console.WriteLine("Enter page number from 1 to {0} or x to return to main menu", _basePages);
-                String _input = Console.ReadLine();
-                if (_input == "x")
+                while (!_correct)
                 {
-                    break;
-                }
-                else
-                {
-                    while (!_correct)
+                    Console.Clear();
+                    Console.WriteLine("Enter page number from 1 to {0}", _basePages);
+                    while (Int32.TryParse(Console.ReadLine(), out _pageNumber) == false)
                     {
-                        while (Int32.TryParse(_input, out _pageNumber) == false)
-                        {
-                            Console.WriteLine("Not correct Symbols...");
-                        }
-                        if (_pageNumber < 1 || _pageNumber > _basePages)
-                        {
-                            Console.WriteLine("Not correct page number...");
-                        }
-                        else
-                        {
-                            _correct = true;
-                        }
+                        Console.Clear();
+                        Console.WriteLine("Not correct Symbols...");
+                        Console.WriteLine("Enter page number from 1 to {0}", _basePages);
                     }
-                    Console.WriteLine("Products on page {0}", _pageNumber);
-                    if (_lastPage && _pageNumber == _basePages)
+                    if (_pageNumber < 1 || _pageNumber > _basePages)
                     {
-                        Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
-                                          this.PurchaseBase[_basePages * 2 - 2].Id,
-                                          this.PurchaseBase[_basePages * 2 - 2].Name,
-                                          this.PurchaseBase[_basePages * 2 - 2].Price,
-                                          this.PurchaseBase[_basePages * 2 - 2].Discount
-                                         );
+                        Console.WriteLine("Not correct page number...");
+                        Console.WriteLine("Press Enter to continue ....");
+                        Console.ReadLine();
                     }
                     else
                     {
-                        Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
-                                          this.PurchaseBase[_pageNumber * 2 - 2].Id,
-                                          this.PurchaseBase[_pageNumber * 2 - 2].Name,
-                                          this.PurchaseBase[_pageNumber * 2 - 2].Price,
-                                          this.PurchaseBase[_pageNumber * 2 - 2].Discount
-                                         );
-                        Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
-                                          this.PurchaseBase[_pageNumber * 2 - 1].Id,
-                                          this.PurchaseBase[_pageNumber * 2 - 1].Name,
-                                          this.PurchaseBase[_pageNumber * 2 - 1].Price,
-                                          this.PurchaseBase[_pageNumber * 2 - 1].Discount
-                                         );
+                        _correct = true;
                     }
-                    Console.WriteLine("Press Enter to continue ....");
-                    Console.ReadLine();
+                }
+                Console.WriteLine("Products on page {0}", _pageNumber);
+                if (_lastPage && _pageNumber == _basePages)
+                {
+                    Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
+                                      this.PurchaseBase[_basePages * 2 - 2].Id,
+                                      this.PurchaseBase[_basePages * 2 - 2].Name,
+                                      this.PurchaseBase[_basePages * 2 - 2].Price,
+                                      this.PurchaseBase[_basePages * 2 - 2].Discount
+                                     );
+                }
+                else
+                {
+                    Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
+                                      this.PurchaseBase[_pageNumber * 2 - 2].Id,
+                                      this.PurchaseBase[_pageNumber * 2 - 2].Name,
+                                      this.PurchaseBase[_pageNumber * 2 - 2].Price,
+                                      this.PurchaseBase[_pageNumber * 2 - 2].Discount
+                                     );
+                    Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
+                                      this.PurchaseBase[_pageNumber * 2 - 1].Id,
+                                      this.PurchaseBase[_pageNumber * 2 - 1].Name,
+                                      this.PurchaseBase[_pageNumber * 2 - 1].Price,
+                                      this.PurchaseBase[_pageNumber * 2 - 1].Discount
+                                     );
+                }
+                Console.WriteLine("Press Enter to continue .... or x to exit to main menu");
+                String _select = Console.ReadLine();
+                if (_select == "x")
+                {
+                    _flagMainMenu = true;
                 }
             }
 
