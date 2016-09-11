@@ -68,16 +68,7 @@ namespace homework_14
             Int32 _basePages = default(Int32);
             Int32 _pageNumber = default(Int32);
             Boolean _flagMainMenu = false;
-            Boolean _lastPage = false;
-            if (this.PurchaseBase.Count % 2 != 0)
-            {
-                _basePages = this.PurchaseBase.Count / 2 + 1;
-                _lastPage = true;
-            }
-            else
-            {
-                _basePages = this.PurchaseBase.Count / 2;
-            }
+            _basePages = this.PurchaseBase.Count % 2 != 0 ? this.PurchaseBase.Count / 2 + 1 : this.PurchaseBase.Count / 2;
             Console.Clear();
             while (!_flagMainMenu)
             {
@@ -104,28 +95,16 @@ namespace homework_14
                     }
                 }
                 Console.WriteLine("Products on page {0}", _pageNumber);
-                if (_lastPage && _pageNumber == _basePages)
+                var _query = from _var in this.PurchaseBase
+                             where (_var.Id > _pageNumber * 2 - 2) && (_var.Id <= _pageNumber * 2)
+                             select _var;
+                foreach (var item in _query)
                 {
                     Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
-                                      this.PurchaseBase[_basePages * 2 - 2].Id,
-                                      this.PurchaseBase[_basePages * 2 - 2].Name,
-                                      this.PurchaseBase[_basePages * 2 - 2].Price,
-                                      this.PurchaseBase[_basePages * 2 - 2].Discount
-                                     );
-                }
-                else
-                {
-                    Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
-                                      this.PurchaseBase[_pageNumber * 2 - 2].Id,
-                                      this.PurchaseBase[_pageNumber * 2 - 2].Name,
-                                      this.PurchaseBase[_pageNumber * 2 - 2].Price,
-                                      this.PurchaseBase[_pageNumber * 2 - 2].Discount
-                                     );
-                    Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
-                                      this.PurchaseBase[_pageNumber * 2 - 1].Id,
-                                      this.PurchaseBase[_pageNumber * 2 - 1].Name,
-                                      this.PurchaseBase[_pageNumber * 2 - 1].Price,
-                                      this.PurchaseBase[_pageNumber * 2 - 1].Discount
+                                      item.Id,
+                                      item.Name,
+                                      item.Price,
+                                      item.Discount
                                      );
                 }
                 Console.WriteLine("Press Enter to continue .... or x to exit to main menu");
@@ -135,7 +114,6 @@ namespace homework_14
                     _flagMainMenu = true;
                 }
             }
-
         }
         public void ThirdTaskMethod()
         {
