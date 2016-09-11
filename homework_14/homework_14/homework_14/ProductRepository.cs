@@ -97,13 +97,13 @@ namespace homework_14
                 var _query = from _var in this.PurchaseBase
                              where (_var.Id > _pageNumber * 2 - 2) && (_var.Id <= _pageNumber * 2)
                              select _var;
-                foreach (var item in _query)
+                foreach (var element in _query)
                 {
                     Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
-                                      item.Id,
-                                      item.Name,
-                                      item.Price,
-                                      item.Discount
+                                      element.Id,
+                                      element.Name,
+                                      element.Price,
+                                      element.Discount
                                      );
                 }
                 Console.WriteLine("Press Enter to continue .... or x to exit to main menu");
