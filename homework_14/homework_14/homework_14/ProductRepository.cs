@@ -65,10 +65,9 @@ namespace homework_14
         }
         public void SecondTaskMethod()
         {
-            Int32 _basePages = default(Int32);
+            Int32 _basePages = this.PurchaseBase.Count % 2 != 0 ? this.PurchaseBase.Count / 2 + 1 : this.PurchaseBase.Count / 2;
             Int32 _pageNumber = default(Int32);
             Boolean _flagMainMenu = false;
-            _basePages = this.PurchaseBase.Count % 2 != 0 ? this.PurchaseBase.Count / 2 + 1 : this.PurchaseBase.Count / 2;
             Console.Clear();
             while (!_flagMainMenu)
             {
