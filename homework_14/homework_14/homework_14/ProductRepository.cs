@@ -94,9 +94,8 @@ namespace homework_14
                     }
                 }
                 Console.WriteLine("Products on page {0}", _pageNumber);
-                var _query = from _var in this.PurchaseBase
-                             where (_var.Id > _pageNumber * 2 - 2) && (_var.Id <= _pageNumber * 2)
-                             select _var;
+                var _query = (from _var in this.PurchaseBase
+                             select _var).Skip(_pageNumber*2-2).Take(2);
                 foreach (var element in _query)
                 {
                     Console.WriteLine("Id: {0}, Name: {1}, Price: {2}, Discount: {3} %",
@@ -119,8 +118,9 @@ namespace homework_14
             Console.Clear();
             Console.WriteLine("Enter words to search in Products : ");
             String _userinput = Console.ReadLine().ToLower();
+            String[] _userInputArray = _userinput.Split(' ');
             var _query = from _var in this.PurchaseBase
-                         where _var.Name.ToLower().Split(' ').Any(word => _userinput.Split(' ').Contains(word))
+                         where _userInputArray.Any(word => _var.Name.ToLower().Contains(word))
                          select _var;
             if (_query.Count() != 0)
             {
