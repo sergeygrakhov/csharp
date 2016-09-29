@@ -31,7 +31,7 @@ namespace homework_15
                     _flagCorrect = true;
                 }
             }
-            _baseArg.Products.Add(new Product { ProductName = _ProductName, ProductPrice = _productPrice });
+            _baseArg.Products.Add(new Product { ProductName = _ProductName, ProductPrice = _productPrice});
             _baseArg.SaveChanges();
             Console.WriteLine("Changes saved...Enter to continue...");
             Console.ReadLine();
@@ -113,9 +113,9 @@ namespace homework_15
                 _baseArg.Products.Remove(item);
             }
             _baseArg.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Products', RESEED, 0)");
+            _baseArg.SaveChanges();
             Console.WriteLine("Database cleared...Enter to continue...");
             Console.ReadLine();
-            _baseArg.SaveChanges();
         }
         public static void EditProductName(ProductBase _baseArg)
         {
@@ -123,9 +123,10 @@ namespace homework_15
             Int32 _selectedId = default(Int32);
             var _query = from item in _baseArg.Products.Include("SellProduct").ToList()
                          select item;
-            if (_query.Count() <= 0)
+            if (_query.Count() == 0)
             {
-                Console.WriteLine("There is no items in database, please, add first...");
+                Console.WriteLine("There is no items in database, please, add first...Enter to continue...");
+                Console.ReadLine();
             }
             else
             {
@@ -165,9 +166,10 @@ namespace homework_15
             Decimal _newPrice = default(Decimal);
             var _query = from item in _baseArg.Products.Include("SellProduct").ToList()
                          select item;
-            if (_query.Count() <= 0)
+            if (_query.Count() == 0)
             {
-                Console.WriteLine("There is no items in database, please, add first...");
+                Console.WriteLine("There is no items in database, please, add first...Enter to continue...");
+                Console.ReadLine();
             }
             else
             {
@@ -217,37 +219,26 @@ namespace homework_15
         public static void Show(ProductBase _baseArg)
         {
             var _query = from product in _baseArg.Products.Include("SellProduct").ToList()
-                        where (product.SellProduct != null)
-                        select product;
+                         select product;
             Console.WriteLine(new String('-', 20));
-            Console.WriteLine("Products with sells:");
+            Console.WriteLine("List:");
             Console.WriteLine(new String('-', 20));
             if (_query.Count()==0)
             {
-                Console.WriteLine("No products with sells...\r\n");
+                Console.WriteLine("No items in database...\r\n");
             }
             else
             {
                 foreach (var product in _query)
                 {
-                    Console.WriteLine("ProductName: {0}  ProductPrice: {1} Purchase sum: {2} ", product.ProductName, product.ProductPrice, product.SellProduct.SellSum);
-                }
-            }
-            var _query2 = from product in _baseArg.Products.Include("SellProduct").ToList()
-                         where (product.SellProduct == null)
-                         select product;
-            Console.WriteLine(new String('-', 20));
-            Console.WriteLine("Products without sells:");
-            Console.WriteLine(new String('-', 20));
-            if (_query.Count() == 0)
-            {
-                Console.WriteLine("No products without sells...\r\n");
-            }
-            else
-            {
-                foreach (var product in _query2)
-                {
-                    Console.WriteLine("ProductName: {0}  ProductPrice: {1} ", product.ProductName, product.ProductPrice);
+                    if (product.SellProduct!=null)
+                    {
+                        Console.WriteLine("Product Id: {0} ProductName: {1}  ProductPrice: {2} Sell sum: {3} ",product.Id ,product.ProductName, product.ProductPrice, product.SellProduct.SellSum);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Product Id: {0} ProductName: {1}  ProductPrice: {2} ", product.Id, product.ProductName, product.ProductPrice);
+                    }
                 }
             }
             Console.WriteLine("Enter to continue...");
@@ -296,6 +287,52 @@ namespace homework_15
                 Console.ReadLine();
             }
         }
+        public static void DeleteElementByKey(ProductBase _baseArg)
+        {
+            Boolean _flagCorrect = false;
+            Int32 _selectedId = default(Int32);
+            var _query = from item in _baseArg.Products.Include("SellProduct").ToList()
+                         select item;
+            if (_query.Count() == 0)
+            {
+
+                Console.WriteLine("There is no items in database, please, add first...Enter to continue...");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.Write("Enter ID from 1 to {0} to delete product :", _query.Count());
+                while (!_flagCorrect)
+                {
+                    while (Int32.TryParse(Console.ReadLine(), out _selectedId) == false)
+                    {
+                        Console.Write("Not correct symbols in Id value, please enter correct: ");
+                    }
+                    if (_selectedId > _query.Count() || _selectedId < 0)
+                    {
+                        Console.Write("Not correct Id, please enter correct: ");
+                    }
+                    else
+                    {
+                        _flagCorrect = true;
+                    }
+               } 
+                _flagCorrect = false;
+                var _selectedItem = _baseArg.Products.Find(_selectedId);
+                _baseArg.Products.Remove(_selectedItem);
+                Console.WriteLine(new String('-', 20));
+                Console.WriteLine("Selected product will be deleted: Id - {0}, ProductName - {1}, ProductPrice - {2} ", _selectedItem.Id, _selectedItem.ProductName, _selectedItem.ProductPrice);
+                if (_selectedItem.SellProduct != null)
+                {
+                    Console.WriteLine("Product Sells - {0}", _selectedItem.SellProduct.SellSum);
+                }
+                Console.WriteLine(new String('-', 20));
+                _baseArg.SaveChanges();
+                Console.WriteLine("Item deleted");
+                Console.WriteLine("Enter to continue...");
+                Console.ReadLine();
+            }
+        }
         public static void Start(ProductBase _baseArg)
         {
             String _charSelect = default(String);
@@ -312,6 +349,7 @@ namespace homework_15
                 Console.WriteLine("5. Edit product price");
                 Console.WriteLine("6. Show database entries");
                 Console.WriteLine("7. Get element by Key");
+                Console.WriteLine("8. Delete element by Key");
                 Console.WriteLine(new String('-', 20));
                 Console.WriteLine("x to exit...");
                 Console.WriteLine(new String('-',20));
@@ -338,6 +376,9 @@ namespace homework_15
                         break;
                     case "7":
                         GetElementByKey(_baseArg);
+                        break;
+                    case "8":
+                        DeleteElementByKey(_baseArg);
                         break;
                     case "x":
                         _flagExit = true;
