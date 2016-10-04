@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace homework_15
 {
@@ -8,7 +9,7 @@ namespace homework_15
     {
         public ProductBase() : base("ProductBaseHomework15") { }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Sell> Purchases { get; set; }
+        public DbSet<Sell> Sell { get; set; }
         public static void AddProduct(ProductBase _baseArg)
         {
             Boolean _flagCorrect = false;
@@ -43,7 +44,7 @@ namespace homework_15
             Int32 _quantity = default(Int32);
             var _query = from item in _baseArg.Products.Include("SellProduct").ToList()
                          select item;
-            if (_query.Count()<=0)
+            if (_query.Count()==0)
             {
                 Console.WriteLine("There is no items in database, please, add first...Enter to continue...");
                 Console.ReadLine();
@@ -103,6 +104,56 @@ namespace homework_15
                 Console.WriteLine(new String('-', 20));
                 _baseArg.SaveChanges();
                 Console.WriteLine("Changes saved...Enter to continue...");
+                Console.ReadLine();
+            }
+        }
+        public static void DeleteSellElementByKey(ProductBase _baseArg)
+        {
+            Boolean _flagCorrect = false;
+            Int32 _selectedId = default(Int32);
+            List<Int32> _listOfId = new List<Int32>();
+            var _query = from item in _baseArg.Products.Include("SellProduct").ToList()
+                         where item.SellProduct != null 
+                         select item;
+            if (_query.Count() == 0)
+            {
+                Console.WriteLine("There is no items in database with sell record, please, add first...Enter to continue...");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Select product by ID to remove sell: ");
+                Console.WriteLine(new String('-', 20));
+                
+                foreach (var product in _query)
+                {
+                    Console.WriteLine("ID: {0}, ProductName: {1}  ProductPrice: {2} Purchase sum: {3}", product.Id, product.ProductName, product.ProductPrice, product.SellProduct.SellSum);
+                    _listOfId.Add(product.Id);
+                  
+                }
+                Console.WriteLine(new String('-', 20));
+                
+                while (!_flagCorrect)
+                {
+                    while (Int32.TryParse(Console.ReadLine(), out _selectedId) == false)
+                    {
+                        Console.Write("Not correct symbols in Id value, please enter correct: ");
+                    }
+                    if (!_listOfId.Contains(_selectedId))
+                    {
+                        Console.Write("Not correct Id, please enter correct: ");
+                    }
+                    else
+                    {
+                        _flagCorrect = true;
+                    }
+                }
+                _flagCorrect = false;
+                var _selectedItem = _baseArg.Products.Find(_selectedId);
+                _baseArg.Sell.Remove(_selectedItem.SellProduct);
+                Console.WriteLine(new String('-', 20));
+                _baseArg.SaveChanges();
+                Console.WriteLine("Sell record deleted...Enter to continue...");
                 Console.ReadLine();
             }
         }
@@ -343,13 +394,14 @@ namespace homework_15
                 Console.WriteLine("Welcome, choose operation to execute, and press enter ");
                 Console.WriteLine(new String('-', 20));
                 Console.WriteLine("1. Add product");
-                Console.WriteLine("2. Add sell to product or edit existing ");
+                Console.WriteLine("2. Add sell record to product or edit existing ");
                 Console.WriteLine("3. Clear database tables");
                 Console.WriteLine("4. Edit product name");
                 Console.WriteLine("5. Edit product price");
                 Console.WriteLine("6. Show database entries");
                 Console.WriteLine("7. Get element by Key");
                 Console.WriteLine("8. Delete element by Key");
+                Console.WriteLine("9. Delete sell record of element by Key");
                 Console.WriteLine(new String('-', 20));
                 Console.WriteLine("x to exit...");
                 Console.WriteLine(new String('-',20));
@@ -379,6 +431,9 @@ namespace homework_15
                         break;
                     case "8":
                         DeleteElementByKey(_baseArg);
+                        break;
+                    case "9":
+                        DeleteSellElementByKey(_baseArg);
                         break;
                     case "x":
                         _flagExit = true;
